@@ -3,7 +3,7 @@ import './App.css';
 import React, { Component } from 'react'
 import DogGreet from './components/DogGreet';
 import Cat from './components/Cat';
-
+import Functional from './components/Functional';
 
 export default class App extends Component {
   constructor(props) {
@@ -141,6 +141,8 @@ export default class App extends Component {
             )}
           </ul>
         </div>
+        <Functional />
+
       </div>
     )
   }

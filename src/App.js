@@ -1,6 +1,8 @@
 import './App.css';
 
 import React, { Component } from 'react'
+import DogGreet from './components/DogGreet';
+import Cat from './components/Cat';
 
 
 export default class App extends Component {
@@ -10,7 +12,7 @@ export default class App extends Component {
 
     this.state = {
       myDog: "Azor",
-      newBreed: "test",
+      newBreed: "Village mix",
       dogs: [
         {
           id: 1,
@@ -30,7 +32,21 @@ export default class App extends Component {
           breed: "Mountain Purebreed",
           says: "Woof!"
         }
-      ]
+      ],
+      cats: [{
+        id: 1,
+        name: "Micka",
+        says: "Meow"
+      }, {
+        id: 2,
+        name: "Hannibal",
+        says: "Mňau"
+      },
+      {
+        id: 3,
+        name: "Simba",
+        says: "Miii"
+      }]
     }
   }
 
@@ -80,11 +96,19 @@ export default class App extends Component {
     this.input.current.focus()
   }
 
+  handleDeleteCat = catToDelete => {
+    this.setState(state => {
+      return {
+        cats: state.cats.filter(cat => cat !== catToDelete)
+      }
+    })
+  }
+
   render() {
     const dogs = this.state.dogs.map(dog =>
       <li key={dog.id}>
         <fieldset style={{ width: "20%" }}>
-          {dog.name} <button onClick = {()=>this.hlandleRemove(dog)}> X </button><br />
+          {dog.name} <button onClick={() => this.hlandleRemove(dog)}> X </button><br />
           {dog.breed} <br />
           {dog.says}
           {/* {dog.name.length <= 4 &&
@@ -102,14 +126,22 @@ export default class App extends Component {
         My dog <strong>{this.state.myDog}</strong>
         <p>I like {this.state.myDog}</p>
         <form onKeyPress={this.handleSubmit} >
-          <input type="text" onChange={this.handleNewName} value={this.state.myDog} ref={this.input} autoFocus/>
-          <br /> <input type="text" onChange={this.handleNewBreed} value={this.state.newBreed}/>
+          <input type="text" onChange={this.handleNewName} value={this.state.myDog} ref={this.input} autoFocus />
+          <br /> <input type="text" onChange={this.handleNewBreed} value={this.state.newBreed} />
         </form>
         <ul style={{ listStyleType: "none" }}>
           {dogs}
         </ul>
+        <DogGreet dogName={this.state.myDog} />
+        
+        <div>
+          <ul style={{ listStyleType: "none" }}>
+            {this.state.cats.map(cat =>
+              <Cat id={cat.id} name={cat.name} sound={cat.says} cat={cat} onDelete={this.handleDeleteCat}/>
+            )}
+          </ul>
+        </div>
       </div>
-
     )
   }
 }
